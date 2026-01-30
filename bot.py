@@ -10,8 +10,7 @@ VIP_ROLE_ID = 1375846595727331368
 EXPIRED_ROLE_ID = 1390480462572683306
 
 intents = discord.Intents.default()
-intents.members = True
-intents.message_content = True
+intents.message_content = True  # só essa é necessária
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
@@ -54,7 +53,7 @@ async def check_expired():
 
         for user_id, expire in list(data.items()):
             if now > expire:
-                member = guild.get_member(int(user_id))
+                member = await guild.fetch_member(int(user_id))
                 if member:
                     if vip_role in member.roles:
                         await member.remove_roles(vip_role)
